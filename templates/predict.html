@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Predict Anemia</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .header {
+            background: white;
+            padding: 10px 40px; /* More padding on both sides */
+            display: flex;
+            justify-content: flex-start; /* Align everything left */
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            box-sizing: border-box;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+            color: #d9534f;
+            margin-right: 60px; /* space between title and nav */
+        }
+        .header nav {
+            display: flex;
+            align-items: center;
+            gap: 25px; /* space between buttons */
+        }
+        .header nav a {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+            padding: 6px 10px; /* clickable padding */
+        }
+        .predict-section {
+            padding: 100px 20px 60px;
+            max-width: 600px;
+            margin: auto;
+            text-align: center;
+        }
+        .predict-container {
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .predict-container h2 {
+            color: #d9534f;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        .predict-container .submit-btn {
+            background-color: #d9534f;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .contact-section {
+            padding: 20px;
+            max-width: 900px;
+            margin: 20px auto;
+            text-align: center;
+        }
+        /* CSS for the result box */
+        .result-box {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 8px;
+            color: white;
+            font-weight: bold;
+        }
+        .result-box.normal {
+            background-color: #28a745; /* Green for normal */
+        }
+        .result-box.anemia {
+            background-color: #dc3545; /* Red for anemia */
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <h1>Anemia</h1>
+        <nav>
+            <a href="{{ url_for('home') }}">Home</a>
+            <a href="{{ url_for('home') }}#about">About</a>
+            <a href="{{ url_for('predict') }}">Predict</a>
+            <a href="{{ url_for('home') }}#contact">Contact</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="predict-section">
+            <div class="predict-container">
+                <h2>Enter the details:</h2>
+                <form action="{{ url_for('predict') }}" method="post">
+                    <div class="form-group">
+                        <label for="gender">Gender:</label>
+                        <select id="gender" name="gender">
+                            <option value="male" {% if gender_val == 'male' %} selected {% endif %}>Male</option>
+                            <option value="female" {% if gender_val == 'female' %} selected {% endif %}>Female</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="hemoglobin">Hemoglobin (g/dL):</label>
+                        <input type="number" id="hemoglobin" name="hemoglobin" placeholder="e.g., 12.0" step="0.1" value="{{ hemoglobin_val }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="mch">Mean Corpuscular Hemoglobin (pg):</label>
+                        <input type="number" id="mch" name="mch" placeholder="e.g., 29.5" step="0.1" value="{{ mch_val }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="mchc">Mean Corpuscular Hemoglobin Concentration (g/dL):</label>
+                        <input type="number" id="mchc" name="mchc" placeholder="e.g., 34.0" step="0.1" value="{{ mchc_val }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="mcv">Mean Corpuscular Volume (fL):</label>
+                        <input type="number" id="mcv" name="mcv" placeholder="e.g., 90.0" step="0.1" value="{{ mcv_val }}" required>
+                    </div>
+                    <button type="submit" class="submit-btn">Submit</button>
+                </form>
+
+                {% if prediction_text %}
+                <div class="result-box {{ result_class }}">
+                    <h3>{{ prediction_text }}</h3>
+                </div>
+                {% endif %}
+            </div>
+        </section>
+        
+        <section class="contact-section">
+            <h3>Contact Us</h3>
+            <p>Anemia AI</p>
+            <p>Karnataka,India</p>
+            <p>Phone: +1 5589 55488 55</p>
+            <p>Email: info@example.com</p>
+        </section>
+    </main>
+</body>
+</html>
