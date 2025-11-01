@@ -107,3 +107,4 @@ Open your web browser and navigate to the following URL:
 
 [http://127.0.0.1:5000](http://127.0.0.1:5000)
 You can now use the application to get anemia predictions.
+The Demo of Anemia Sense app : https://drive.google.com/file/d/17MnawXvPOrwTu2sInEfq8sADnfHEJjau/view?usp=sharing
